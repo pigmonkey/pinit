@@ -72,19 +72,31 @@ get_tags() {
     fi
 }
 
+get_toread() {
+    echo -n "Unread [no]: "
+    read input_toread
+    if [ -z "$input_toread" ] || [[ "$input_toread" == n* ]]; then
+        toread="no"
+    else
+        toread="yes"
+    fi
+}
+
 add_pin() {
-    result="$(curl -s -G --data-urlencode "url=$url" --data-urlencode "description=$name" --data-urlencode "tags=$tags" "https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_USER:$PINBOARD_KEY&format=json&replace=no")"
+    result="$(curl -s -G --data-urlencode "url=$url" --data-urlencode "description=$name" --data-urlencode "tags=$tags" --data-urlencode "toread=$toread" "https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_USER:$PINBOARD_KEY&format=json&replace=no")"
 }
 
 get_creds
 get_url
 get_name
 get_tags
+get_toread
 
 echo "Creating bookmark..."
 echo "	URL:	$url"
 echo "	Name:	$name"
 echo "	Tags:	$tags"
+echo "	Unread:	$toread"
 
 add_pin
 echo "Pinboard result:"
