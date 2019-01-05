@@ -26,8 +26,7 @@ get_current_window() {
 
 get_name() {
     get_current_window
-    echo -n "Enter name [$window_name]: "
-    read input_name
+    read -e -p "Enter name: " -i "$window_name" input_name
     # If the user did not input a name, use the active window name.
     if [ -z "$input_name" ]; then
         name="$window_name"
@@ -47,8 +46,7 @@ get_url() {
         url=$(xclip -o -selection clipboard)
     fi
     # Prompt the user for a URL.
-    echo -n "Enter URL [$url]: "
-    read input_url
+    read -e -p "Enter URL: " -i "$url" input_url
     # If the user did input a URL, use it instead of whatever we had before.
     if [ -n "$input_url" ]; then
         url="$input_url"
@@ -62,8 +60,7 @@ get_url() {
 
 get_tags() {
     # Prompt the user for a list of tags.
-    echo -n "Enter tags [$DEFAULT_TAGS]: "
-    read input_tags
+    read -e -p "Enter tags: " -i "$DEFAULT_TAGS" input_tags
     # If the user did not input any tags, use the defaults.
     if [ -z "$input_tags" ]; then
         tags="$DEFAULT_TAGS"
@@ -73,8 +70,7 @@ get_tags() {
 }
 
 get_toread() {
-    echo -n "Unread [no]: "
-    read input_toread
+    read -e -p "Unread: " -i "no" input_toread
     if [ -z "$input_toread" ] || [[ "$input_toread" == n* ]]; then
         toread="no"
     else
@@ -87,7 +83,7 @@ add_pin() {
 }
 
 get_creds
-get_url
+get_url "$@"
 get_name
 get_tags
 get_toread
