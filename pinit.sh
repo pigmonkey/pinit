@@ -20,8 +20,8 @@ get_creds() {
 get_current_window() {
     # Get the ID of the window currently under the mouse pointer.
     window_id="$(xdotool getmouselocation --shell | grep WINDOW | sed 's/.*=\(.*\)/\1/')"
-    # Get the name of thw window, removing anything after the final dash (ie " - Chromium").
-    window_name="$(xdotool getwindowname $window_id | sed -e 's/\(.*\)\( - .*\)$/\1/g')"
+    # Get the name of thw window, removing anything after the final dash (ie " - Chromium" or " — Mozilla Firefox").
+    window_name="$(xdotool getwindowname $window_id | sed -e 's/\(.*\)\( - .*\)$/\1/g;s/\(.*\)\( — .*\)$/\1/g')"
 }
 
 get_name() {
