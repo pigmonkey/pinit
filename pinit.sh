@@ -4,7 +4,7 @@
 #
 ###############################################################################
 
-DEFAULT_TAGS="pinit"
+DEFAULT_TAGS=""
 
 get_creds() {
     if [ -z "$PINBOARD_USER" ]; then
